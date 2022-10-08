@@ -154,7 +154,9 @@ export const GooglePlacesAutocomplete = forwardRef((props, ref) => {
   }, []);
   useEffect(() => {
     // Update dataSource if props.predefinedPlaces changed
-    setDataSource(buildRowsFromResults([]));
+    const rows = buildRowsFromResults([]);
+    setDataSource(rows);
+    props.onDataSourceChange(rows);
   }, [props.predefinedPlaces]);
 
   useImperativeHandle(ref, () => ({
@@ -875,6 +877,7 @@ GooglePlacesAutocomplete.propTypes = {
   minLength: PropTypes.number,
   nearbyPlacesAPI: PropTypes.string,
   numberOfLines: PropTypes.number,
+  onDataSourceChange: PropTypes.func,
   onFail: PropTypes.func,
   onNotFound: PropTypes.func,
   onPress: PropTypes.func,
@@ -925,6 +928,7 @@ GooglePlacesAutocomplete.defaultProps = {
   minLength: 0,
   nearbyPlacesAPI: 'GooglePlacesSearch',
   numberOfLines: 1,
+  onDataSourceChange: () => {},
   onFail: () => {},
   onNotFound: () => {},
   onPress: () => {},
