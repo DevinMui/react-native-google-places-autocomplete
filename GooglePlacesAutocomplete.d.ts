@@ -366,6 +366,17 @@ interface RequestUrl {
   headers?: Record<string, string>;
 }
 
+interface GooglePlacesAutocompleteResult {
+  description: string;
+  place_id: string;
+  reference: string;
+  structured_formatting: {
+    main_text: string;
+    secondary_text: string;
+  };
+  types: string[];
+}
+
 interface GooglePlacesAutocompleteProps {
   autoFillOnNotFound?: boolean;
   /** Will add a 'Current location' button at the top of the predefined places list */
