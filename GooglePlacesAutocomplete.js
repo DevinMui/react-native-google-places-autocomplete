@@ -135,7 +135,7 @@ export const GooglePlacesAutocomplete = forwardRef((props, ref) => {
   };
 
   const [stateText, setStateText] = useState('');
-  const [dataSource, setDataSource] = useState(buildRowsFromResults([]));
+  const [dataSource, _setDataSource] = useState(buildRowsFromResults([]));
   const [listViewDisplayed, setListViewDisplayed] = useState(
     props.listViewDisplayed === 'auto' ? false : props.listViewDisplayed,
   );
@@ -154,9 +154,7 @@ export const GooglePlacesAutocomplete = forwardRef((props, ref) => {
   }, []);
   useEffect(() => {
     // Update dataSource if props.predefinedPlaces changed
-    const rows = buildRowsFromResults([]);
-    setDataSource(rows);
-    props.onDataSourceChange(rows);
+    setDataSource(buildRowsFromResults([]));
   }, [props.predefinedPlaces]);
 
   useImperativeHandle(ref, () => ({
@@ -170,6 +168,11 @@ export const GooglePlacesAutocomplete = forwardRef((props, ref) => {
     clear: () => inputRef.current.clear(),
     getCurrentLocation,
   }));
+
+  const setDataSource = (dataSource) => {
+    _setDataSource(dataSource);
+    props.onDataSourceChange(dataSource);
+  }
 
   const requestShouldUseWithCredentials = () =>
     url === 'https://maps.googleapis.com/maps/api';
